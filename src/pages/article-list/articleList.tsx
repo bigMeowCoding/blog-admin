@@ -1,38 +1,36 @@
 import { Button, Col, List, Row, Modal, message } from "antd";
-import axios, { AxiosResponse } from "axios";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import React, { FC, useEffect } from "react";
 import servicePath from "../../common/config/apiUrl";
 
 import "./articleList.scss";
 import { useHistory } from "react-router-dom";
-import { Article } from "../../interface/article";
+import {  useDispatch, useSelector } from "dva";
+import { ArticleListState } from "./models/article-list";
+import { State } from "../../interface/dva";
 
 const { confirm } = Modal;
 
 const ArticleList: FC = () => {
-  const [list, setList] = useState<Article[]>([]);
+  const dispatch = useDispatch();
+  const articleListState = useSelector<State, ArticleListState>((state) => {
+    return state.articleList;
+  });
   const history = useHistory();
 
-  const setArticleList = useCallback(async () => {
-    const res: AxiosResponse<{ list: Article[] }> = await getList();
-    setList(res.data.list);
-  }, []);
+  // const setArticleList = useCallback(async () => {
+  //   const res: AxiosResponse<{ list: Article[] }> = await getList();
+  //   setList(res.data.list);
+  // }, []);
+  console.log('list state',articleListState)
 
   useEffect(() => {
-    setArticleList().catch((e) => {
-      console.error(e);
+    dispatch({
+      type: "articleList/getArticleList",
     });
-  }, [setArticleList]);
+  }, []);
 
-  //得到文章列表
-  const getList = () => {
-    return axios.get(servicePath.getArticleList, {
-      withCredentials: true,
-      headers: { "Access-Control-Allow-Origin": "*" },
-    });
-  };
-
-  //删除文章的方法
+  // 删除文章的方法
   const delArticle = (id: number) => {
     confirm({
       title: "确定要删除这篇博客文章吗?",
@@ -41,9 +39,9 @@ const ArticleList: FC = () => {
         axios(servicePath.delArticle + id, { withCredentials: true }).then(
           () => {
             message.success("文章删除成功");
-            setArticleList().catch((e) => {
-              console.error(e);
-            });
+            // setArticleList().catch((e) => {
+            //   console.error(e);
+            // });
           }
         );
       },
@@ -53,7 +51,7 @@ const ArticleList: FC = () => {
     });
   };
 
-  //修改文章
+  // 修改文章
   const updateArticle = (id: number) => {
     history.push("/index/add/" + id);
   };
@@ -85,7 +83,7 @@ const ArticleList: FC = () => {
           </Row>
         }
         bordered
-        dataSource={list}
+        dataSource={articleListState?.list}
         renderItem={(item: any) => (
           <List.Item>
             <Row className="list-div">

@@ -1,23 +1,27 @@
-import React, { FC, useState } from "react";
+import React, {FC, useState} from "react";
 
 import { Layout, Menu, Breadcrumb } from "antd";
 import "./index.scss";
-import { Route, useHistory } from "react-router-dom";
-import AddArticle from "../add-article/add-article";
-import ArticleList from "../article-list/articleList";
+import { useHistory} from "react-router-dom";
 import { MenuInfo } from "rc-menu/es/interface";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const AdminIndex: FC = () => {
+const AdminIndex: FC = ({children}) => {
   const history = useHistory();
+
+
   const [collapsed, setCollapsed] = useState(false);
 
-  const onCollapse = (collapsed: boolean) => {
-    setCollapsed(collapsed);
+  const onCollapse = (flag: boolean) => {
+    setCollapsed(flag);
   };
-
+// useEffect(()=> {
+//   dispatch({
+//     type: "articleList/getArticleList",
+//   });
+// },[])
   const handleClickArticle = (e: MenuInfo) => {
     if (e.key === "addArticle") {
       history.push("/index/add");
@@ -57,10 +61,22 @@ const AdminIndex: FC = () => {
           </Breadcrumb>
           <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
             <div>
-              <Route path="/index/" exact component={AddArticle} />
-              <Route path="/index/add/" exact component={AddArticle} />
-              <Route path="/index/add/:id" exact component={AddArticle} />
-              <Route path="/index/list/" exact component={ArticleList} />
+              {children}
+              {/*<Switch>*/}
+              {/*  <Route path="/index/" exact component={AddArticle} />*/}
+              {/*  <Route path="/index/add/" exact component={AddArticle} />*/}
+              {/*  <Route path="/index/add/:id" exact component={AddArticle} />*/}
+              {/*  <Route*/}
+              {/*      path="/index/list/"*/}
+              {/*      exact*/}
+              {/*      component={dynamic({*/}
+              {/*        app,*/}
+              {/*        models: () => [import("../article-list/models/article-list")],*/}
+              {/*        component: () => import("../article-list/articleList"),*/}
+              {/*      })}*/}
+              {/*  />*/}
+              {/*</Switch>*/}
+
             </div>
           </div>
         </Content>
