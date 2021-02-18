@@ -5,7 +5,7 @@ import servicePath from "../../common/config/apiUrl";
 
 import "./articleList.scss";
 import { useHistory } from "react-router-dom";
-import {  useDispatch, useSelector } from "dva";
+import {connect, useDispatch, useSelector } from "dva";
 import { ArticleListState } from "./models/article-list";
 import { State } from "../../interface/dva";
 
@@ -22,7 +22,7 @@ const ArticleList: FC = () => {
   //   const res: AxiosResponse<{ list: Article[] }> = await getList();
   //   setList(res.data.list);
   // }, []);
-  console.log('list state',articleListState)
+  console.log("list state", articleListState);
 
   useEffect(() => {
     dispatch({
@@ -62,7 +62,7 @@ const ArticleList: FC = () => {
         header={
           <Row className="list-div">
             <Col span={8}>
-              <b>标题</b>
+              <b>标题sssfdffsds</b>
             </Col>
             <Col span={3}>
               <b>类别</b>
@@ -78,7 +78,7 @@ const ArticleList: FC = () => {
             </Col>
 
             <Col span={4}>
-              <b>操作</b>
+              <b>操作d</b>
             </Col>
           </Row>
         }
@@ -121,4 +121,7 @@ const ArticleList: FC = () => {
   );
 };
 
-export default ArticleList;
+// @ts-ignore
+export default connect(({ products }) => ({
+  products,
+}))(ArticleList);
