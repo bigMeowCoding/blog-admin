@@ -1,0 +1,4 @@
+{
+  "plugins": ["dva-hmr"],
+  "presets": ["react-app"]
+}

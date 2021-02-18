@@ -20,20 +20,20 @@ const { TextArea } = Input;
 
 const AddArticle: FC = () => {
   // const { id } = useParams();
-  let match = useRouteMatch<{ id: string }>("/index/add/:id");
-  let params = match && match.params;
+  const match = useRouteMatch<{ id: string }>("/index/add/:id");
+  const params = match && match.params;
   const history = useHistory();
   const [articleId, setArticleId] = useState(0); // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
-  const [articleTitle, setArticleTitle] = useState(""); //文章标题
-  const [articleContent, setArticleContent] = useState(""); //markdown的编辑内容
-  const [markdownContent, setMarkdownContent] = useState("预览内容"); //html内容
-  const [introducemd, setIntroducemd] = useState(""); //简介的markdown内容
-  const [introducehtml, setIntroducehtml] = useState("等待编辑"); //简介的html内容
-  const [showDate, setShowDate] = useState(""); //发布日期
-  const [selectedType, setSelectType] = useState(0); //选择的文章类别
+  const [articleTitle, setArticleTitle] = useState(""); // 文章标题
+  const [articleContent, setArticleContent] = useState(""); // markdown的编辑内容
+  const [markdownContent, setMarkdownContent] = useState("预览内容"); // html内容
+  const [introducemd, setIntroducemd] = useState(""); // 简介的markdown内容
+  const [introducehtml, setIntroducehtml] = useState("等待编辑"); // 简介的html内容
+  const [showDate, setShowDate] = useState(""); // 发布日期
+  const [selectedType, setSelectType] = useState(0); // 选择的文章类别
   const [typeInfo, setTypeInfo] = useState<any[]>([]); // 文章类别信息
 
-  //从中台得到文章类别信息
+  // 从中台得到文章类别信息
   const getTypeInfo = useCallback(() => {
     axios({
       method: "get",
@@ -52,7 +52,7 @@ const AddArticle: FC = () => {
 
   useEffect(() => {
     getTypeInfo();
-    //获得文章ID
+    // 获得文章ID
     if (params && params.id) {
       const { id } = params,
         idNumber = parseInt(id, 10);
@@ -77,7 +77,7 @@ const AddArticle: FC = () => {
 
   function changeArticleContent(content: string) {
     setArticleContent(content);
-    let html = marked(content);
+    const html = marked(content);
     setMarkdownContent(html);
   }
 
@@ -87,11 +87,11 @@ const AddArticle: FC = () => {
 
   const changeIntroduce = (e: any) => {
     setIntroducemd(e.target.value);
-    let html = marked(e.target.value);
+    const html = marked(e.target.value);
     setIntroducehtml(html);
   };
 
-  //选择类别后的便哈
+  // 选择类别后的便哈
   const selectTypeHandler = (value: any) => {
     setSelectType(value);
   };
@@ -114,7 +114,7 @@ const AddArticle: FC = () => {
       return false;
     }
 
-    let dataProps: Article = {
+    const dataProps: Article = {
       id: 0,
       type_id: selectedType,
       title: articleTitle,
@@ -122,9 +122,9 @@ const AddArticle: FC = () => {
       introduce: introducemd,
       addTime: 0,
       view_count: 0,
-    }; //传递到接口的参数
+    }; // 传递到接口的参数
 
-    let datetext = showDate.replace("-", "/"); //把字符串转换成时间戳
+    const datetext = showDate.replace("-", "/"); // 把字符串转换成时间戳
     dataProps.addTime = new Date(datetext).getTime() / 1000;
 
     if (articleId === 0) {
@@ -164,13 +164,13 @@ const AddArticle: FC = () => {
       withCredentials: true,
       headers: { "Access-Control-Allow-Origin": "*" },
     }).then((res) => {
-      //let articleInfo= res.data.data[0]
+      // let articleInfo= res.data.data[0]
       setArticleTitle(res.data.data[0].title);
       setArticleContent(res.data.data[0].article_content);
-      let html = marked(res.data.data[0].article_content);
+      const html = marked(res.data.data[0].article_content);
       setMarkdownContent(html);
       setIntroducemd(res.data.data[0].introduce);
-      let tmpInt = marked(res.data.data[0].introduce);
+      const tmpInt = marked(res.data.data[0].introduce);
       setIntroducehtml(tmpInt);
       setShowDate(res.data.data[0].addTime);
       setSelectType(res.data.data[0].typeId);

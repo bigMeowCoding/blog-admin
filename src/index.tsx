@@ -2,7 +2,6 @@ import React from "react";
 import "antd/dist/antd.css";
 import dva from "dva";
 import { createBrowserHistory as createHistory } from 'history'
-// @ts-ignore
 import createLoading from 'dva-loading'
 import RouterConfig from "./pages/main";
 
