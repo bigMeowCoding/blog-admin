@@ -1,5 +1,5 @@
 
-const dynamic = (require("dva") as any).dynamic;
+import dynamic from 'dva/dynamic';
 
 export const getNavData = (app: any) => [
   {
