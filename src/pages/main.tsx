@@ -2,6 +2,7 @@ import React from "react";
 import { routerRedux, router, Router as DvaRouter } from "dva";
 import { ConfigProvider } from "antd";
 import { getNavData } from "./menu";
+import { Redirect } from "react-router";
 const Router = routerRedux.ConnectedRouter;
 
 const { Switch, Route } = router;
@@ -11,6 +12,8 @@ const RouteWithProps: any = ({
   exact,
   strict,
   render,
+  redirect,
+  to,
   location,
   ...rest
 }) => (
@@ -19,7 +22,11 @@ const RouteWithProps: any = ({
     exact={exact}
     strict={strict}
     location={location}
-    render={(props) => render({ ...props, ...rest })}
+    render={
+      redirect
+        ? () => <Redirect to={to} />
+        : (props) => render({ ...props, ...rest })
+    }
   />
 );
 
@@ -43,13 +50,10 @@ export function renderRoutes(routes, extraProps = {}, switchProps = {}) {
             path={route.path}
             exact={route.exact}
             strict={route.strict}
+            redirect={route.redirect}
+            to={route.to}
             render={(props) => {
-              const childRoutes = renderRoutes(
-                route.children,
-                {},
-                {
-                }
-              );
+              const childRoutes = renderRoutes(route.children, {}, {});
               if (route.component) {
                 const compatProps = getCompatProps({
                   ...props,

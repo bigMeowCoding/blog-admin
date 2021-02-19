@@ -1,6 +1,15 @@
+
 const dynamic = (require("dva") as any).dynamic;
 
 export const getNavData = (app: any) => [
+  {
+    path: "/",
+    name: "",
+    exact: true,
+    redirect: true,
+    to: "/login",
+    children: [],
+  },
   {
     path: "/login/",
     name: "",
@@ -34,6 +43,12 @@ export const getNavData = (app: any) => [
           models: () => [import("./article-list/models/article-list")],
           component: () => import("./article-list/articleList"),
         }),
+      },
+      {
+        path: "/",
+        name: "",
+        redirect: true,
+        to: "/index/list/",
       },
     ],
   },
