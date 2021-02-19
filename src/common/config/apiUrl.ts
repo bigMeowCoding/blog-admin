@@ -1,6 +1,6 @@
 export let ipUrl = "http://127.0.0.1:7002/admin/";
 
-let servicePath = {
+export default {
   getTypeInfo: ipUrl + "getTypeInfo", //  获得文章类别信息
   checkLogin: ipUrl + "checkLogin", //  检查用户名密码是否正确
   addArticle: ipUrl + "addArticle", //  添加文章
@@ -11,4 +11,3 @@ let servicePath = {
   delArticle: ipUrl + "delArticle/", //  删除文章
   getArticleById: ipUrl + "getArticleById/", //  根据ID获得文章详情
 };
-export default servicePath;

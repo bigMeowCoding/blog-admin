@@ -23,9 +23,7 @@ const articleList: {
   effects: {
     *getArticleList({}, { call, put }) {
       const response = yield call(getArticleList);
-      let list = response.data.list;
-      list=[]
-      console.log("list", list);
+      const list = response.data.list;
       yield put({
         type: "updateArticleList",
         payload: list,
