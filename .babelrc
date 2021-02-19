@@ -1,11 +1,3 @@
 {
-  "plugins": [
-    [
-      "dva-hmr",
-      {
-        "disableModel": true
-      }
-    ]
-  ],
   "presets": ["react-app"]
 }
