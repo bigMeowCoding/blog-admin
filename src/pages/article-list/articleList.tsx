@@ -76,7 +76,6 @@ const ArticleList: FC = () => {
             <Col span={3}>
               <b>浏览量</b>
             </Col>
-
             <Col span={4}>
               <b>操作</b>
             </Col>
